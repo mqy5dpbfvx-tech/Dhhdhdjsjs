@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vape Shop Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            background: #1a1a1a; 
+            color: white; 
+            margin: 0; 
+            padding: 15px; 
+            padding-bottom: 100px; 
+        }
+        h1 { text-align: center; color: #0088cc; }
+        .category { margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .category h2 { color: #0088cc; font-size: 1.2rem; margin-top: 20px; border-left: 4px solid #0088cc; padding-left: 10px; }
+        .brand-title { color: #bbb; font-size: 0.9rem; margin: 10px 0 5px 5px; font-weight: bold; text-transform: uppercase; }
+        
+        .item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #2c2c2c; 
+            padding: 10px 12px; 
+            margin: 5px 0; 
+            border-radius: 8px; 
+        }
+        .item span { font-size: 0.9rem; flex: 1; padding-right: 10px; }
+        .price-tag { color: #4CAF50; font-weight: bold; margin-right: 10px; min-width: 40px; text-align: right; }
+        
+        button { 
+            background: #0088cc; 
+            border: none; 
+            color: white; 
+            padding: 6px 12px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        button:active { transform: scale(0.9); }
+
+        .cart-btn { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 15px;
+            right: 15px;
+            padding: 15px; 
+            background: #4CAF50; 
+            border: none; 
+            color: white; 
+            font-weight: bold; 
+            border-radius: 10px; 
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h1>Vape Shop</h1>
+        
+        <!-- ЖИДКОСТИ -->
+        <div class="category">
+            <h2>Жидкости</h2>
+
+            <div class="brand-title">YUMMY (17р)</div>
+            <div class="item"><span>Гуава киви</span><span class="price-tag">17р</span><button onclick="addToCart('YUMMY: Гуава киви', 17)">+</button></div>
+            <div class="item"><span>Пина колада</span><span class="price-tag">17р</span><button onclick="addToCart('YUMMY: Пина колада', 17)">+</button></div>
+            <div class="item"><span>Манго маракуйя</span><span class="price-tag">17р</span><button onclick="addToCart('YUMMY: Манго маракуйя', 17)">+</button></div>
+
+            <div class="brand-title">ЗЛОЙ МОНАХ (20р)</div>
+            <div class="item"><span>Малина ежевика</span><span class="price-tag">20р</span><button onclick="addToCart('Злой Монах: Малина ежевика', 20)">+</button></div>
+
+            <div class="brand-title">Podonki V1 (15р)</div>
+            <div class="item"><span>Смородиновый лимонад</span><span class="price-tag">15р</span><button onclick="addToCart('Podonki V1: Смород. лимонад', 15)">+</button></div>
+            <div class="item"><span>Малиновый лимонад лед</span><span class="price-tag">15р</span><button onclick="addToCart('Podonki V1: Малин. лимонад', 15)">+</button></div>
+
+            <div class="brand-title">Podonki Podgon (15р)</div>
+            <div class="item"><span>Лимонные черви</span><span class="price-tag">15р</span><button onclick="addToCart('Podonki Podgon: Лим. черви', 15)">+</button></div>
+            <div class="item"><span>Апельсин</span><span class="price-tag">15р</span><button onclick="addToCart('Podonki Podgon: Апельсин', 15)">+</button></div>
+
+            <div class="brand-title">ANNIMA LOVE (17р)</div>
+            <div class="item"><span>Кислый гранат. коктейль</span><span class="price-tag">17р</span><button onclick="addToCart('ANNIMA: Гранат. коктейль', 17)">+</button></div>
+            <div class="item"><span>Кислый цитрусовый сок</span><span class="price-tag">17р</span><button onclick="addToCart('ANNIMA: Цитрус. сок', 17)">+</button></div>
+
+            <div class="brand-title">MAD & Самоубийца V2 (20р)</div>
+            <div class="item"><span>Энергетик ананас</span><span class="price-tag">20р</span><button onclick="addToCart('MAD: Энергетик ананас', 20)">+</button></div>
+            <div class="item"><span>Садовая смородина лед</span><span class="price-tag">20р</span><button onclick="addToCart('MAD: Смородина лед', 20)">+</button></div>
+            <div class="item"><span>Черешня яблоко</span><span class="price-tag">20р</span><button onclick="addToCart('MAD: Черешня яблоко', 20)">+</button></div>
+            <div class="item"><span>Малиновый йогурт</span><span class="price-tag">20р</span><button onclick="addToCart('MAD: Малин. йогурт', 20)">+</button></div>
+            <div class="item"><span>Ягодный йогурт</span><span class="price-tag">20р</span><button onclick="addToCart('MAD: Ягодный йогурт', 20)">+</button></div>
+
+            <div class="brand-title">Cats Dota (17р)</div>
+            <div class="item"><span>Тик так апельсин вишня</span><span class="price-tag">17р</span><button onclick="addToCart('Cats Dota: Тик-так', 17)">+</button></div>
+            <div class="item"><span>Зеленый чай с малиной</span><span class="price-tag">17р</span><button onclick="addToCart('Cats Dota: Чай малина', 17)">+</button></div>
+            <div class="item"><span>Яблочный сидр</span><span class="price-tag">17р</span><button onclick="addToCart('Cats Dota: Сидр', 17)">+</button></div>
+
+            <div class="brand-title">Catswill Extra (17р)</div>
+            <div class="item"><span>Виноград апельсин</span><span class="price-tag">17р</span><button onclick="addToCart('Catswill Extra: Виноград', 17)">+</button></div>
+            <div class="item"><span>Морошка скитлс лимон</span><span class="price-tag">17р</span><button onclick="
+> ChatGPT | Nano Banana:
+addToCart('Catswill Extra: Морошка', 17)">+</button></div>
+            <div class="item"><span>Кислый мандарин скитлс</span><span class="price-tag">17р</span><button onclick="addToCart('Catswill Extra: Мандарин', 17)">+</button></div>
+
+            <div class="brand-title">Catswill Salt (17р)</div>
+            <div class="item"><span>Лимон имбирь малина</span><span class="price-tag">17р</span><button onclick="addToCart('Catswill Salt: Лимон-имбирь', 17)">+</button></div>
+
+            <div class="brand-title">Catswill Malasian (17р)</div>
+            <div class="item"><span>Цитрусовый циклон</span><span class="price-tag">17р</span><button onclick="addToCart('Catswill Malasian: Циклон', 17)">+</button></div>
+
+            <div class="brand-title">Рик и Морти Кислые (17р)</div>
+            <div class="item"><span>Апельсиновый темми</span><span class="price-tag">17р</span><button onclick="addToCart('Рик и Морти: Апельсин', 17)">+</button></div>
+        </div>
+
+        <!-- ОДНОРАЗКИ -->
+        <div class="category">
+            <h2>Одноразки</h2>
+            
+            <div class="brand-title">Elfbar MOONNIGHT 40k (40р)</div>
+            <div class="item"><span>Лайм кола</span><span class="price-tag">40р</span><button onclick="addToCart('Elfbar 40k: Лайм кола', 40)">+</button></div>
+            <div class="item"><span>Персик лед</span><span class="price-tag">40р</span><button onclick="addToCart('Elfbar 40k: Персик лед', 40)">+</button></div>
+            <div class="item"><span>Вишня арбуз</span><span class="price-tag">40р</span><button onclick="addToCart('Elfbar 40k: Вишня арбуз', 40)">+</button></div>
+
+            <div class="brand-title">GTMBAR TURBO 30k (40р)</div>
+            <div class="item"><span>Черника малина</span><span class="price-tag">40р</span><button onclick="addToCart('GTMBAR 30k: Черника малина', 40)">+</button></div>
+        </div>
+
+        <!-- РАСХОДНИКИ -->
+        <div class="category">
+            <h2>Расходники / Поды</h2>
+            <div class="item"><span>Картридж Ватруха</span><span class="price-tag">13р</span><button onclick="addToCart('Картридж V.Thru', 13)">+</button></div>
+            <div class="item"><span>Картридж XROS 0.4 ом</span><span class="price-tag">12р</span><button onclick="addToCart('Картридж XROS 0.4', 12)">+</button></div>
+            <div class="item"><span>Картридж XROS 0.6 ом</span><span class="price-tag">12р</span><button onclick="addToCart('Картридж XROS 0.6', 12)">+</button></div>
+            <div class="item"><span>Испаритель Hero 0.4</span><span class="price-tag">12р</span><button onclick="addToCart('Испар Hero', 12)">+</button></div>
+            <div class="item"><span>AEGIS HERO H45</span><span class="price-tag">110р</span><button onclick="addToCart('H45', 110)">+</button></div>
+            <div class="item"><span>AEGIS BOOST 3</span><span class="price-tag">120р</span><button onclick="addToCart('Boost 3', 120)">+</button></div>
+        </div>
+    </div>
+
+    <button id="main-btn" class="cart-btn" onclick="sendOrder()">
+        Оформить заказ (0р)
+    </button>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand(); 
+        
+        let cart = [];
+        let totalPrice = 0;
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            totalPrice += price;
+            document.getElementById('main-btn').innerText = `Оформить заказ (${totalPrice}р)`;
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function sendOrder() {
+            if (cart.length === 0) {
+                tg.showAlert("Ваша корзина пуста!");
+                return;
+            }
+            
+            // Формируем красивый текст для сообщения
+            let text = "Здравствуйте! Хочу заказать:\n\n";
+            cart.forEach((item, index) => {
+                text += `${index + 1}. ${item.name} - ${item.price}р\n`;
+            });
+            text += `\n💵 Итого к оплате: ${totalPrice}р`;
+
+            // Кодируем текст для ссылки
+            let encodedText = encodeURIComponent(text);
+            
+            // Ссылка на ваш профиль с предзаполненным текстом
+            let contactLink = `https://t.me/premtyt1?text=${encodedText}`;
+
+            // Пытаемся отправить данные боту (для истории)
+            try { tg.sendData(text); } catch (e) {}
+
+            // Перенаправляем пользователя в ЛС к вам
+            window.location.href = contactLink;
+        }
+    </script>
+</body>
+</html>
